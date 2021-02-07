@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PcUserDao extends JpaRepository<PcUserEntity, Long> {
+
+    PcUserEntity findByPhone(String phone);
+
+
 }
