@@ -14,18 +14,34 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 
     private String token;
 
+    private String authType;
+
     public JwtAuthenticatioToken(Object principal, Object credentials) {
         super(principal, credentials);
     }
 
-    public JwtAuthenticatioToken(Object principal, Object credentials, String token) {
+    public JwtAuthenticatioToken(Object principal, Object credentials, String authType) {
+        super(principal, credentials);
+        this.authType = authType;
+    }
+
+    public JwtAuthenticatioToken(Object principal, Object credentials, String authType, String token) {
         super(principal, credentials);
         this.token = token;
+        this.authType = authType;
     }
 
     public JwtAuthenticatioToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities, String token) {
         super(principal, credentials, authorities);
         this.token = token;
+    }
+
+    public String getAuthType() {
+        return authType;
+    }
+
+    public void setAuthType(String authType) {
+        this.authType = authType;
     }
 
     public String getToken() {

@@ -1,5 +1,6 @@
 package com.cody.demo.config;
 
+import com.cody.demo.dao.BackUserDao;
 import com.cody.demo.dao.PcUserDao;
 import com.cody.demo.entity.PcUserEntity;
 import com.cody.demo.security.JwtUserDetails;
@@ -7,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private PcUserDao pcUserDao;
+
+    @Autowired
+    private BackUserDao backUserDao;
 
     /**
      * 根据账号获取用户信息
@@ -30,4 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new JwtUserDetails(byPhone.getPhone(), byPhone.getPassword());
     }
+
+
+
 }

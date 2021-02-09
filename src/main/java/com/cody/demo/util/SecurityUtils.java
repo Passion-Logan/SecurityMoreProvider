@@ -21,7 +21,7 @@ public class SecurityUtils {
      * @return
      */
     public static JwtAuthenticatioToken login(HttpServletRequest request, String username, String password, AuthenticationManager authenticationManager) {
-        JwtAuthenticatioToken token = new JwtAuthenticatioToken(username, password);
+        JwtAuthenticatioToken token = new JwtAuthenticatioToken(username, password, request.getParameter("authType"));
         token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         // 执行登录认证过程
         Authentication authentication = authenticationManager.authenticate(token);
@@ -31,7 +31,8 @@ public class SecurityUtils {
         token.setToken(JwtTokenUtils.generateToken(authentication));
 
         // 生成并返回token给客户端，后续访问携带此token
-        return new JwtAuthenticatioToken(null, null, JwtTokenUtils.generateToken(authentication));
+//        return new JwtAuthenticatioToken(null, null, JwtTokenUtils.generateToken(authentication));
+        return token;
     }
 
     /**
