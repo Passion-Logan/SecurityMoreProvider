@@ -36,7 +36,6 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
         AbstractAuthenticationToken token = new JwtAuthenticatioToken(
                 request.getParameter(USERNAME), request.getParameter(PASSWORD), request.getParameter(AUTH_TYPE)
         );
-//        token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         this.setDetails(request, token);
 
 
