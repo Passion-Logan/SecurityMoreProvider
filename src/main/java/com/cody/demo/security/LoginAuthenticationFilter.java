@@ -1,4 +1,4 @@
-package com.cody.demo.config;
+package com.cody.demo.security;
 
 
 import com.cody.demo.util.SecurityUtils;

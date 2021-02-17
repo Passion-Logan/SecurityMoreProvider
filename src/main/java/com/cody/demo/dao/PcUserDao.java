@@ -9,5 +9,4 @@ public interface PcUserDao extends JpaRepository<PcUserEntity, Long> {
 
     PcUserEntity findByPhone(String phone);
 
-
 }

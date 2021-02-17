@@ -4,6 +4,7 @@ import com.cody.demo.entity.BackUserEntity;
 import com.cody.demo.entity.PcUserEntity;
 import com.cody.demo.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,9 @@ public class HomeController {
 
     @Autowired
     private HomeService homeService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     /**
      * 密码123
@@ -41,6 +45,5 @@ public class HomeController {
 
         homeService.addBackUser(user);
     }
-
 
 }

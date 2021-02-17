@@ -1,7 +1,6 @@
-package com.cody.demo.config;
+package com.cody.demo.security;
 
 
-import com.cody.demo.security.JwtAuthenticatioToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -22,7 +21,7 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
     private static final String OAUTH_TOKEN_URL = "/home/login";
     private static final String HTTP_METHOD_POST = "POST";
 
-    protected CustomAuthenticationProcessingFilter() {
+    public CustomAuthenticationProcessingFilter() {
         super(new AntPathRequestMatcher(OAUTH_TOKEN_URL, HTTP_METHOD_POST));
     }
 

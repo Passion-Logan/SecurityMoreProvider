@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 public class HomeServiceImpl implements HomeService {
 
     @Autowired
-    PcUserDao pcDao;
+    private PcUserDao pcDao;
 
     @Autowired
-    BackUserDao backDao;
+    private BackUserDao backDao;
 
     @Override
     public void addPcUser(PcUserEntity user) {
