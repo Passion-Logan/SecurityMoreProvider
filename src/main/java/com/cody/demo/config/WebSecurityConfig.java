@@ -2,6 +2,7 @@ package com.cody.demo.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cody.demo.security.AdminAuthenticationProvider;
+import com.cody.demo.security.CusAuthenticationFailureHandler;
 import com.cody.demo.security.CusAuthenticationSuccessHandler;
 import com.cody.demo.security.CustomAuthenticationProcessingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CusAuthenticationSuccessHandler successHandler;
 
+    @Autowired
+    private CusAuthenticationFailureHandler failureHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -49,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             resp.setContentType("application/json;charset=utf-8");
             PrintWriter out = resp.getWriter();
             //封装异常描述信息
-            String json = JSONObject.toJSONString("登录失效,请重新登录");
+            String json = JSONObject.toJSONString(exception.getMessage());
             out.write(json);
             out.flush();
             out.close();
@@ -70,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthenticationProcessingFilter filter = new CustomAuthenticationProcessingFilter();
         filter.setAuthenticationManager(authenticationManager);
         filter.setAuthenticationSuccessHandler(successHandler);
+        filter.setAuthenticationFailureHandler(failureHandler);
         return filter;
     }
 

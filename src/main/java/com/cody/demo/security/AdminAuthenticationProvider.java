@@ -8,7 +8,6 @@ import com.cody.demo.util.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class AdminAuthenticationProvider implements AuthenticationProvider {
@@ -20,7 +19,7 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
     private BackUserDao backUserDao;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) {
 
         if (authentication.getPrincipal() == null) {
             throw new RuntimeException("用户名为空");
