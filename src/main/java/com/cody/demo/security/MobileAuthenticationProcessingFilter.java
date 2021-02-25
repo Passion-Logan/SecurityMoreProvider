@@ -1,18 +1,16 @@
 package com.cody.demo.security;
 
 
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class MobileAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -31,7 +29,7 @@ public class MobileAuthenticationProcessingFilter extends AbstractAuthentication
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (this.postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
@@ -41,12 +39,13 @@ public class MobileAuthenticationProcessingFilter extends AbstractAuthentication
         String password = request.getParameter(PASSWORD);
         password = (password != null) ? password : "";
 
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-        setDetails(request, authRequest);
+        AbstractAuthenticationToken authRequest = new MobileAuthenticationToken(username, password);
+        this.setDetails(request, authRequest);
+
         return this.getAuthenticationManager().authenticate(authRequest);
     }
 
-    protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+    protected void setDetails(HttpServletRequest request, AbstractAuthenticationToken authRequest) {
         authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
     }
 

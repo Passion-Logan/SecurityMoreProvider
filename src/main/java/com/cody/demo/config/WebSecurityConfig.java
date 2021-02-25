@@ -1,10 +1,7 @@
 package com.cody.demo.config;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cody.demo.security.AdminAuthenticationProvider;
-import com.cody.demo.security.CusAuthenticationFailureHandler;
-import com.cody.demo.security.CusAuthenticationSuccessHandler;
-import com.cody.demo.security.CustomAuthenticationProcessingFilter;
+import com.cody.demo.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CusAuthenticationFailureHandler failureHandler;
 
+    @Autowired
+    private MobileAuthenticationProvider mobileAuthenticationProvider;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 配置认证方式等
         auth.authenticationProvider(adminAuthenticationProvider());
+        auth.authenticationProvider(mobileAuthenticationProvider);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //http相关的配置，包括登入登出、异常处理、会话管理等
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/home/login").permitAll()
+                .antMatchers("/mobile/login", "/home/login").permitAll()
                 .anyRequest().authenticated();
 
         //各类错误异常处理 以下针对于访问资源路径 认证异常捕获 和 无权限处理
@@ -68,6 +69,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(externalAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
+    /**
+     * 方式一
+     *
+     * @return
+     */
     @Bean
     public CustomAuthenticationProcessingFilter externalAuthenticationProcessingFilter() {
         CustomAuthenticationProcessingFilter filter = new CustomAuthenticationProcessingFilter();
@@ -75,6 +81,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
         return filter;
+    }
+
+    /**
+     * 方式二
+     *
+     * @return
+     */
+    @Bean
+    public MobileAuthenticationProcessingFilter mobileAuthenticationProcessingFilter() {
+        MobileAuthenticationProcessingFilter mobileFilter = new MobileAuthenticationProcessingFilter(authenticationManager);
+        mobileFilter.setAuthenticationSuccessHandler(successHandler);
+        mobileFilter.setAuthenticationFailureHandler(failureHandler);
+        return mobileFilter;
     }
 
     @Bean
