@@ -37,12 +37,13 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
         );
         this.setDetails(request, token);
 
-
         return this.getAuthenticationManager().authenticate(token);
     }
 
     protected void setDetails(HttpServletRequest request, AbstractAuthenticationToken authRequest) {
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
+
+
 
 }
