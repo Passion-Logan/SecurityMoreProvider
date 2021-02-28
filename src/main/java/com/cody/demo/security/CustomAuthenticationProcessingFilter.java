@@ -43,5 +43,4 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
     protected void setDetails(HttpServletRequest request, AbstractAuthenticationToken authRequest) {
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
-
 }
