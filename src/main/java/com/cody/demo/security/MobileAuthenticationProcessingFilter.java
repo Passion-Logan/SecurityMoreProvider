@@ -24,6 +24,10 @@ public class MobileAuthenticationProcessingFilter extends AbstractAuthentication
 
     private boolean postOnly = true;
 
+    public MobileAuthenticationProcessingFilter() {
+        super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
+    }
+
     public MobileAuthenticationProcessingFilter(AuthenticationManager authenticationManager) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
     }
