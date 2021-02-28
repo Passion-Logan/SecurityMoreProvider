@@ -44,6 +44,4 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
 
-
-
 }
